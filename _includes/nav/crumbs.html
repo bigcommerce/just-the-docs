@@ -1,0 +1,46 @@
+{%- comment -%}
+  {%- include nav/crumbs.html
+        nodes = array
+        prev_page = page_or_nil
+        next_page = page_or_nil
+        parent_page = page_or_nil
+        page = page -%}
+  outputs breadcrumb navigation links for the nodes, and the title of the current page.
+  
+  If `site.nav_next_prev` is true, it also outputs links for navigation to the
+  previous and next sibling pages and to the parent page, using variables set
+  by nav/links.html. The link text/symbols can be configured by setting
+  `nav_prev_text`, `nav_up_text`, and `nav_next_text` in _config.yml; the
+  defaults are the ordinary arrow symbols.
+{%- endcomment -%}
+
+{% if site.nav_next_prev %}
+{% unless include.parent_page == nil and include.page.nav_exclude %}
+<nav class="nav-rel">
+  {% if include.prev_page %}
+    <a href="{{ include.prev_page.url | relative_url }}" class="nav-rel-link">{{ site.nav_prev_text | default: "&larr;" }}</a>
+  {% endif %}
+  {% if include.parent_page %}
+    <a href="{{ include.parent_page.url | relative_url }}" class="nav-rel-link">{{ site.nav_up_text | default: "&uarr;" }}</a>
+  {% endif %}
+  {% if include.next_page %}
+    <a href="{{ include.next_page.url | relative_url }}" class="nav-rel-link">{{ site.nav_next_text | default: "&rarr;" }}</a>
+  {% endif %}
+</nav>
+{% endunless %}
+{% endif %}
+
+{% if include.parent_page and include.page.url != "/" %}
+<nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    {%- for node in include.nodes -%}
+    <li class="breadcrumb-nav-list-item">
+      <a href="{{ node.url | relative_url }}">{{ node.title }}</a>
+    </li>
+    {%- endfor -%}
+    <li class="breadcrumb-nav-list-item">
+      <span>{{ include.page.title }}</span>
+    </li>
+  </ol>
+</nav>
+{% endif %}

@@ -1,4 +1,4 @@
-@charset "UTF-8";
+// @charset "UTF-8";
 
 //
 // Styles for rendered markdown in the .main-content container
@@ -21,7 +21,6 @@
   a {
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
   ul,

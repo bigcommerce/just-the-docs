@@ -13,21 +13,20 @@
 # you will see them accessed via {{ site.title }}, {{ site.github_repo }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Just the Docs
+# title: Just the Docs
 description: A Jekyll theme for documentation
 baseurl: "/just-the-docs" # the subpath of your site, e.g. /blog
-url: "https://pmarsceill.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+# url: "https://pmarsceill.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+
+#####################
+# TO BE REMOVED:
+title: Just the Docs FORK pdmosses/just-the-docs @combination-rec-nav 
+url: "https://pdmosses.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+# This branch is to be temporarily published at https://pdmosses.github.io/just-the-docs/
+#####################
 
 permalink: pretty
-exclude: ["node_modules/", "*.gemspec", "*.gem", "Gemfile", "Gemfile.lock", "package.json", "package-lock.json",  "script/", "LICENSE.txt", "lib/", "bin/", "README.md", "Rakefile"
-# , "docs/tests/"
-]
-
-# Regression tests
-# By default, the pages in /docs/tests are excluded when the ste is built.
-# To include them, comment-out the relevant line above.
-# Uncommenting the following line doesn't work - see https://github.com/jekyll/jekyll/issues/4791
-# include: ["docs/tests/"]
+exclude: ["node_modules/", "*.gemspec", "*.gem", "Gemfile", "Gemfile.lock", "package.json", "package-lock.json",  "script/", "LICENSE.txt", "lib/", "bin/", "README.md", "Rakefile"]
 
 # Set a path/url to a logo that will be displayed instead of the title
 #logo: "/assets/images/just-the-docs.png"
@@ -64,8 +63,8 @@ heading_anchors: true
 
 # Aux links for the upper right navigation
 aux_links:
-  "Just the Docs on GitHub":
-    - "//github.com/pmarsceill/just-the-docs"
+  "Just the Docs FORK on GitHub":
+    - "//github.com/pdmosses/just-the-docs/tree/combination-rec-nav"
 
 # Makes Aux links open in a new tab. Default is false
 aux_links_new_tab: false
@@ -73,6 +72,17 @@ aux_links_new_tab: false
 # Sort order for navigation links
 # nav_sort: case_insensitive # default, equivalent to nil
 nav_sort: case_sensitive # Capital letters sorted before lowercase
+
+# Include links to parent and sibling pages when showing the automatic TOC. Default is false
+nav_next_prev: true
+#
+# The default arrows can be changed to other characters or words
+# nav_prev_text: "&larr;"
+# nav_up_text:   "&uarr;"
+# nav_next_text: "&rarr;"
+
+# Caching navigation links
+nav_cache: true # default, equivalent to nil
 
 # Footer content
 # appears at the bottom of every page's main content
@@ -97,15 +107,165 @@ gh_edit_branch: "master" # the branch that your docs is served from
 # gh_edit_source: docs # the source that your files originate from
 gh_edit_view_mode: "tree" # "tree" or "edit" if you want the user to jump into the editor immediately
 
-# Color scheme currently only supports "dark", "light"/nil (default), or a custom scheme that you define
-color_scheme: nil
+# Color scheme supports "dark", "light", and your custom schemes:
+# color_scheme: nil                # default: light
+# To add a button to switch all pages to a different scheme:
+toggle_color_scheme: dark          # default: nil (no toggle button)
+# To display the toggle button only on one page:
+toggle_page_url: "/"               # default: nil (display on all pages)
+# To toggle automatically when the system mode preference changes:
+# toggle_auto_mode: true             # default: nil (manual toggle)
+# To set the button text for toggling and reverting:
+# toggle_text_1: "&rarr; &#x26ab;" # default: "&rarr; Dark Mode"
+# toggle_text_2: "&rarr; &#x26ab;" # default: "&rarr; Light Mode"
 
 # Callouts
-# The title of a callout is optional, and rendered in uppercase.
-# The variables $color-000 and $color-300 are required for each color.
+# 
+# The title of a callout is optional. It is rendered in uppercase.
+# 
+# Each kind of callout has a color, used for the callout bar, the title, and the background.
 # Predefined colors: grey-lt, grey-dk, purple, blue, green, yellow, red.
-# Common names for callouts:
-# admonition, attention, caution, danger, error, hint, important, note, tip, warning.
+# If you use another color, you should define its levels (000, 100, 200, 300) in _sass/custom/custom.scss.
+#
+# The default is for callout backgrounds to have a lower color level than the bars and titles.
+# The value of `callouts_level` is either `quiet` or `loud`:
+# `loud` increases the saturation and lightness of the backgrounds.
+# The default for `callouts_level` is `quiet` when using the `light` or custom color schemes,
+# and `loud` when using the `dark` color scheme.
+# 
+# Examples (not provided by default):
+# 
+# callouts:
+#   admonition:
+#     # title:
+#     color: grey-lt
+#   attention:
+#     title: Attention
+#     color: purple
+#   caution:
+#     title: Caution
+#     color: yellow
+#   custom:
+#     title: Custom
+#     color: pink
+#     opacity: 0.3
+#   danger:
+#     title: Danger
+#     color: red
+#   error:
+#     title: Error
+#     color: red
+#   highlight:
+#     color: yellow
+#     opacity: 0.5
+#   hint:
+#     title: Hint
+#     color: grey-dk
+#   important:
+#     title: Important
+#     color: green
+#   note:
+#     title: Note
+#     color: blue
+#   tip:
+#     title: Tip
+#     color: grey-dk
+#   warning:
+#     title: Warning
+#     color: red
+
+# Google Analytics Tracking (optional)
+# e.g, UA-1234567-89
+ga_tracking: UA-2709176-10
+ga_tracking_anonymize_ip: true # Use GDPR compliant Google Analytics settings (true/nil by default)
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-include-cache
+
+kramdown:
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
+
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  startings: []
+  blanklines: false
+  profile: false
+  # ignore:
+  #   envs: all
+
+###########################
+# TO BE REMOVED:
+
+# COPY OF _config_tests.yml
+
+# Define Jekyll collections
+collections:
+  tests:
+    permalink: "/:collection/:path:output_ext"
+    output: true
+  test_collection_1:
+    permalink: "/:collection/:path:output_ext"
+    output: true
+  test_collection_2:
+    permalink: "/:collection/:path:output_ext"
+    output: true
+  test_collection_3:
+    permalink: "/:collection/:path:output_ext"
+    output: true
+  test_collection_4:
+    permalink: "/:collection/:path:output_ext"
+    output: true
+  test_collection_4:
+    permalink: "/:collection/:path:output_ext"
+    output: true
+
+just_the_docs:
+  collections:
+    tests:
+      name: Tests
+      nav_exclude: false
+      nav_fold: true
+      search_exclude: true
+    test_collection_1:
+      name: Test Collection 1
+      nav_exclude: false
+      nav_fold: true
+      search_exclude: true
+    test_collection_2:
+      name: Test Collection 2
+      nav_exclude: false
+      nav_fold: true
+      search_exclude: false
+    test_collection_3:
+      name: Test Collection 3
+      nav_exclude: false
+      nav_fold: false
+      search_exclude: true
+    test_collection_4:
+      name: Test Collection 4
+      nav_exclude: true
+      search_exclude: false
+    test_collection_5:
+      name: Test Collection 5
+      nav_exclude: true
+      search_exclude: true
+
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+      type: "tests"
+    values:
+      layout: "default"
+
+# callouts_opacity: 0.15
+# callouts_level: loud
+
 callouts:
   admonition:
     # title:
@@ -144,26 +304,4 @@ callouts:
   warning:
     title: Warning
     color: red
-
-# Google Analytics Tracking (optional)
-# e.g, UA-1234567-89
-ga_tracking: UA-2709176-10
-ga_tracking_anonymize_ip: true # Use GDPR compliant Google Analytics settings (true/nil by default)
-
-plugins:
-  - jekyll-seo-tag
-
-kramdown:
-  syntax_highlighter_opts:
-    block:
-      line_numbers: false
-
-compress_html:
-  clippings: all
-  comments: all
-  endings: all
-  startings: []
-  blanklines: false
-  profile: false
-  # ignore:
-  #   envs: all
+#####################

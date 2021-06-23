@@ -1,0 +1,50 @@
+{%- comment -%}
+  {%- include nav/toc.html
+        nodes = array
+        prev_page = page_or_nil
+        next_page = page_or_nil
+        parent_page = page_or_nil
+        page = page -%}
+  outputs a table of contents with navigation links to the nodes, unless empty.
+  The heading for the table can be configured by setting `site.toc_heading`.
+  
+  If `site.nav_next_prev` is true, it also outputs links for navigation to the
+  previous and next sibling pages and to the parent page, using variables set
+  by nav/links.html. The link text/symbols can be configured by setting
+  `nav_prev_text`, `nav_up_text`, and `nav_next_text` in _config.yml; the
+  defaults are the ordinary arrow symbols.
+{%- endcomment -%}
+
+{%- if site.nav_next_prev or include.nodes.size >= 1 -%}
+  <hr>
+{% endif %}
+  
+{% if site.nav_next_prev %}
+{% unless include.parent_page == nil and include.page.nav_exclude %}
+  <p class="nav-rel">
+    {% if include.prev_page %}
+      <a href="{{ include.prev_page.url | relative_url }}" class="nav-rel-link">{{ site.nav_prev_text | default: "&larr;" }}</a>
+    {% endif %}
+    {% if include.parent_page %}
+      <a href="{{ include.parent_page.url | relative_url }}" class="nav-rel-link">{{ site.nav_up_text | default: "&uarr;" }}</a>
+    {% endif %}
+    {% if include.next_page %}
+      <a href="{{ include.next_page.url | relative_url }}" class="nav-rel-link">{{ site.nav_next_text | default: "&rarr;" }}</a>
+    {% endif %}
+  </p>
+{% endunless %}
+{% endif %}
+
+{%- if include.nodes.size >= 1 -%}
+  <h2 class="text-delta">{{ site.toc_heading | default: "Table of contents" }}</h2>
+  <ul>
+    {%- for node in include.nodes -%}
+      <li>
+        <a href="{{ node.url | relative_url }}">{{ node.title }}</a>
+        {%- if node.summary -%}
+          - {{ node.summary }}
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

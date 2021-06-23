@@ -39,31 +39,21 @@ layout: table_wrappers
       </svg>
     </symbol>
   </svg>
+  
+  <script type="text/javascript" src="{{ '/assets/js/toggle_init.js' | relative_url }}"></script>
 
   <div class="side-bar">
     <div class="site-header">
-      <a href="{{ '/' | absolute_url }}" class="site-title lh-tight">{% include title.html %}</a>
+      <a href="{{ '/' | relative_url }}" class="site-title lh-tight">{% include title.html %}</a>
       <a href="#" id="menu-button" class="site-button">
         <svg viewBox="0 0 24 24" class="icon"><use xlink:href="#svg-menu"></use></svg>
       </a>
     </div>
+    
+    {% include toggle.html %}
+
     <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
-      {% if site.just_the_docs.collections %}
-        {% assign collections_size = site.just_the_docs.collections | size %}
-        {% for collection_entry in site.just_the_docs.collections %}
-          {% assign collection_key = collection_entry[0] %}
-          {% assign collection_value = collection_entry[1] %}
-          {% assign collection = site[collection_key] %}
-          {% if collection_value.nav_exclude != true %}
-            {% if collections_size > 1 %}
-              <div class="nav-category">{{ collection_value.name }}</div>
-            {% endif %}
-            {% include nav.html pages=collection %}
-          {% endif %}
-        {% endfor %}
-      {% else %}
-        {% include nav.html pages=site.html_pages %}
-      {% endif %}
+      {% include nav/main.html page=page %}
     </nav>
     <footer class="site-footer">
       This site uses <a href="https://github.com/pmarsceill/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
@@ -100,36 +90,14 @@ layout: table_wrappers
       {% endif %}
     </div>
     <div id="main-content-wrap" class="main-content-wrap">
-      {% unless page.url == "/" %}
-        {% if page.parent %}
-          {%- for node in pages_list -%}
-            {%- if node.parent == nil -%}
-              {%- if page.parent == node.title or page.grand_parent == node.title -%}
-                {%- assign first_level_url = node.url | absolute_url -%}
-              {%- endif -%}
-              {%- if node.has_children -%}
-                {%- assign children_list = pages_list | where: "parent", node.title -%}
-                {%- for child in children_list -%}
-                  {%- if page.url == child.url or page.parent == child.title -%}
-                    {%- assign second_level_url = child.url | absolute_url -%}
-                  {%- endif -%}
-                {%- endfor -%}
-              {%- endif -%}
-            {%- endif -%}
-          {%- endfor -%}
-          <nav aria-label="Breadcrumb" class="breadcrumb-nav">
-            <ol class="breadcrumb-nav-list">
-              {% if page.grand_parent %}
-                <li class="breadcrumb-nav-list-item"><a href="{{ first_level_url }}">{{ page.grand_parent }}</a></li>
-                <li class="breadcrumb-nav-list-item"><a href="{{ second_level_url }}">{{ page.parent }}</a></li>
-              {% else %}
-                <li class="breadcrumb-nav-list-item"><a href="{{ first_level_url }}">{{ page.parent }}</a></li>
-              {% endif %}
-              <li class="breadcrumb-nav-list-item"><span>{{ page.title }}</span></li>
-            </ol>
-          </nav>
-        {% endif %}
-      {% endunless %}
+
+      {% include nav/crumbs.html 
+            nodes=nav_page_ancestors
+            prev_page=nav_page_prev
+            next_page=nav_page_next
+            parent_page=nav_page_ancestors.last
+            page=page %}
+
       <div id="main-content" class="main-content" role="main">
         {% if site.heading_anchors != false %}
           {% include vendor/anchor_headings.html html=content beforeHeading="true" anchorBody="<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><use xlink:href=\"#svg-link\"></use></svg>" anchorClass="anchor-heading" anchorAttrs="aria-labelledby=\"%html_id%\"" %}
@@ -137,18 +105,14 @@ layout: table_wrappers
           {{ content }}
         {% endif %}
 
-        {% if page.has_children == true and page.has_toc != false %}
-          <hr>
-          <h2 class="text-delta">Table of contents</h2>
-          <ul>
-            {%- assign children_list = pages_list | where: "parent", page.title | where: "grand_parent", page.parent -%}
-            {% for child in children_list %}
-              <li>
-                <a href="{{ child.url | absolute_url }}">{{ child.title }}</a>{% if child.summary %} - {{ child.summary }}{% endif %}
-              </li>
-            {% endfor %}
-          </ul>
-        {% endif %}
+        {% unless page.has_toc == false %}
+          {% include nav/toc.html
+                nodes=nav_page_children
+                prev_page=nav_page_prev
+                next_page=nav_page_next
+                parent_page=nav_page_ancestors.last
+                page=page %}
+        {% endunless %}
 
         {% capture footer_custom %}
           {%- include footer_custom.html -%}
@@ -198,5 +162,8 @@ layout: table_wrappers
       <div class="search-overlay"></div>
     {% endif %}
   </div>
+
+  <script type="text/javascript" src="{{ '/assets/js/toggle_mode.js' | relative_url }}"></script>
+
 </body>
 </html>

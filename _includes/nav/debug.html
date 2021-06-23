@@ -1,0 +1,44 @@
+{% comment %}
+  The following debug code requires a locally installed plugin:
+  
+  Copied from http://www.twisterrob.net/blog/2015/06/Jekyll-hacks-for-development.html#debugging-liquid
+  
+  'debug': Error: private method `new' called for Jekyll::Tags::HighlightBlock:Class
+  'dump_html', 'dump_text', 'dump_console': work OK
+  
+  To activate basic debug output at the bottom of each page, set in _config.yml:
+  
+    nav_debug: ""
+  
+  To include both the current debug options:
+  
+    nav_debug: "nav_parenthood,nav_top_nodes"
+    
+    {{ nav_page_path | dump_html: "nav_page_path" }}
+    {{ nav_page_ancestors | map: "title" | dump_html: "nav_page_ancestors" }}
+    {{ nav_page_children | map: "title" | dump_html: "nav_page_children" }}
+
+    {{ page.path | dump_html: "page.path" }}
+    {{ page.relative_path | dump_html: "page.relative_path" }}
+    {{ page.name | dump_html: "page.name" }}
+    {{ nav_page_dir | dump_html: "nav_page_dir" }}
+    {{ nav_direct | dump_html: "nav_direct" }}
+    
+    {{ include.prev.title | dump_html: "prev" }}
+    {{ include.next.title | dump_html: "next" }}
+    {{ include.nodes | map: "title" | dump_html: "nodes" }}
+
+{% endcomment %}
+
+{% assign debug_options = debug | split: "," %}
+{% for debug_option in debug_options %}
+{% case debug_option %}
+  {% when "nav_parenthood" %}
+    {% for item in nav_parenthood %}
+      {{ item.name | dump_html: "nav_parenthood" }}
+      {{ item.items | map: "name" | dump_html }}
+    {% endfor %}
+  {% when "nav_top_nodes" %}
+    {{ nav_top_nodes | map: "name" | dump_html: "nav_top_nodes" }}
+{% endcase %}
+{% endfor %}
