@@ -13,17 +13,10 @@
 # you will see them accessed via {{ site.title }}, {{ site.github_repo }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-# title: Just the Docs
+title: Just the Docs
 description: A Jekyll theme for documentation
 baseurl: "/just-the-docs" # the subpath of your site, e.g. /blog
-# url: "https://pmarsceill.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-
-#####################
-# TO BE REMOVED:
-title: Just the Docs FORK pdmosses/just-the-docs @combination-rec-nav 
-url: "https://pdmosses.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-# This branch is to be temporarily published at https://pdmosses.github.io/just-the-docs/
-#####################
+url: "https://pmarsceill.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 permalink: pretty
 exclude: ["node_modules/", "*.gemspec", "*.gem", "Gemfile", "Gemfile.lock", "package.json", "package-lock.json",  "script/", "LICENSE.txt", "lib/", "bin/", "README.md", "Rakefile"]
@@ -197,111 +190,3 @@ compress_html:
   profile: false
   # ignore:
   #   envs: all
-
-###########################
-# TO BE REMOVED:
-
-# COPY OF _config_tests.yml
-
-# Define Jekyll collections
-collections:
-  tests:
-    permalink: "/:collection/:path:output_ext"
-    output: true
-  test_collection_1:
-    permalink: "/:collection/:path:output_ext"
-    output: true
-  test_collection_2:
-    permalink: "/:collection/:path:output_ext"
-    output: true
-  test_collection_3:
-    permalink: "/:collection/:path:output_ext"
-    output: true
-  test_collection_4:
-    permalink: "/:collection/:path:output_ext"
-    output: true
-  test_collection_4:
-    permalink: "/:collection/:path:output_ext"
-    output: true
-
-just_the_docs:
-  collections:
-    tests:
-      name: Tests
-      nav_exclude: false
-      nav_fold: true
-      search_exclude: true
-    test_collection_1:
-      name: Test Collection 1
-      nav_exclude: false
-      nav_fold: true
-      search_exclude: true
-    test_collection_2:
-      name: Test Collection 2
-      nav_exclude: false
-      nav_fold: true
-      search_exclude: false
-    test_collection_3:
-      name: Test Collection 3
-      nav_exclude: false
-      nav_fold: false
-      search_exclude: true
-    test_collection_4:
-      name: Test Collection 4
-      nav_exclude: true
-      search_exclude: false
-    test_collection_5:
-      name: Test Collection 5
-      nav_exclude: true
-      search_exclude: true
-
-defaults:
-  -
-    scope:
-      path: "" # an empty string here means all files in the project
-      type: "tests"
-    values:
-      layout: "default"
-
-# callouts_opacity: 0.15
-# callouts_level: loud
-
-callouts:
-  admonition:
-    # title:
-    color: grey-lt
-  attention:
-    title: Attention
-    color: purple
-  caution:
-    title: Caution
-    color: yellow
-  custom:
-    title: Custom
-    color: pink
-    opacity: 0.3
-  danger:
-    title: Danger
-    color: red
-  error:
-    title: Error
-    color: red
-  highlight:
-    color: yellow
-    opacity: 0.5
-  hint:
-    title: Hint
-    color: grey-dk
-  important:
-    title: Important
-    color: green
-  note:
-    title: Note
-    color: blue
-  tip:
-    title: Tip
-    color: grey-dk
-  warning:
-    title: Warning
-    color: red
-#####################
