@@ -1,6 +1,6 @@
 ---
 ---
-{% if site.toggle_color_scheme %}
+{% if site.toggle_color_scheme != "nil" %}
 
   {% if site.toggle_auto_mode and site.toggle_auto_mode != "nil" %}
     {% assign toggle_auto_mode = site.toggle_auto_mode %}
@@ -18,7 +18,7 @@
     {% assign toggle_text_2 = "&rarr; Light Mode" %}
   {% endif %}
 
-  const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');	
+  const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
 
   if (theme === "dark") {
     document.getElementById("theme-toggle").innerHTML = "{{ toggle_text_2 }}";
@@ -36,11 +36,11 @@
 
   {% if toggle_auto_mode %}
 
-    let systemInitiatedDark = window.matchMedia("(prefers-color-scheme: dark)"); 
+    let systemInitiatedDark = window.matchMedia("(prefers-color-scheme: dark)");
 
     function prefersColorTest(systemInitiatedDark) {
       if (systemInitiatedDark.matches) {
-        document.documentElement.setAttribute('data-theme', 'dark');		
+        document.documentElement.setAttribute('data-theme', 'dark');
         document.getElementById("theme-toggle").innerHTML = "{{ toggle_text_2 }}";
         window.localStorage.setItem('theme', '');
       } else {
@@ -51,7 +51,7 @@
     }
 
     systemInitiatedDark.addListener(prefersColorTest);
-    
+
   {% endif %}
 
 {% endif %}
