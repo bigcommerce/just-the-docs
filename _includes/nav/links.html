@@ -1,26 +1,26 @@
 {%- comment -%}
-  {%- include nav/links.html 
-        nodes = array 
-        path = string 
+  {%- include nav/links.html
+        nodes = array
+        path = string
         in_section = value_or_nil
         pages = array
         page = page -%}
   outputs links for non-excluded nodes and their children. The links for an
   inactive node are independent of the path to the current page, but only those
   for top-level nodes are cached.
-  
-  Also sets nav_page_prev and nav_page_next (maybe to nil) for use by 
+
+  Also sets nav_page_prev and nav_page_next (maybe to nil) for use by
   nav/crumbs.html and nav/toc.html. Excluded nodes are skipped at the top level,
   but not at lower levels.
 {%- endcomment -%}
 
 <ul class="nav-list">
 {%- for node in include.nodes -%}
-  
+
   {%- if node.url == include.page.url and site.nav_next_prev -%}
     {%- assign nav_page_prev = nil -%}
     {%- unless forloop.first -%}
-      {%- assign nav_prev_index = forloop.index0 | minus: 1 -%}  
+      {%- assign nav_prev_index = forloop.index0 | minus: 1 -%}
       {%- for index in (0..nav_prev_index) reversed -%}
         {%- if include.nodes[index].parent or include.nodes[index].nav_exclude != true -%}
           {%- assign nav_page_prev = include.nodes[index] -%}
@@ -40,7 +40,7 @@
       {%- endfor -%}
     {%- endunless -%}
   {%- endif -%}
-  
+
   {%- unless node.nav_exclude == true -%}
 
 {%- capture nav_newline %}
@@ -53,7 +53,7 @@
       {%- assign nav_active = false -%}
     {%- endif -%}
 
-    {%- if nav_active or site.nav_cache == false or node.parent -%}
+    {%- if nav_active or site.nav_cache == false or node.parent or site.nav_cache_main == true -%}
       {%- include nav/node.html
             node = node
             path = nav_path

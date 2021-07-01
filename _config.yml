@@ -20,7 +20,7 @@ baseurl: "/just-the-docs" # the subpath of your site, e.g. /blog
 
 #####################
 # TO BE REMOVED:
-title: Just the Docs FORK pdmosses/just-the-docs @combination-rec-nav 
+title: Just the Docs FORK pdmosses/just-the-docs @combination-rec-nav
 url: "https://pdmosses.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 # This branch is to be temporarily published at https://pdmosses.github.io/just-the-docs/
 #####################
@@ -84,6 +84,9 @@ nav_next_prev: true
 # Caching navigation links
 nav_cache: true # default, equivalent to nil
 
+# Cache the whole nav block
+nav_cache_main: false
+
 # Footer content
 # appears at the bottom of every page's main content
 
@@ -120,9 +123,9 @@ toggle_page_url: "/"               # default: nil (display on all pages)
 # toggle_text_2: "&rarr; &#x26ab;" # default: "&rarr; Light Mode"
 
 # Callouts
-# 
+#
 # The title of a callout is optional. It is rendered in uppercase.
-# 
+#
 # Each kind of callout has a color, used for the callout bar, the title, and the background.
 # Predefined colors: grey-lt, grey-dk, purple, blue, green, yellow, red.
 # If you use another color, you should define its levels (000, 100, 200, 300) in _sass/custom/custom.scss.
@@ -132,9 +135,9 @@ toggle_page_url: "/"               # default: nil (display on all pages)
 # `loud` increases the saturation and lightness of the backgrounds.
 # The default for `callouts_level` is `quiet` when using the `light` or custom color schemes,
 # and `loud` when using the `dark` color scheme.
-# 
+#
 # Examples (not provided by default):
-# 
+#
 # callouts:
 #   admonition:
 #     # title:

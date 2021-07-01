@@ -39,7 +39,7 @@ layout: table_wrappers
       </svg>
     </symbol>
   </svg>
-  
+
   <script type="text/javascript" src="{{ '/assets/js/toggle_init.js' | relative_url }}"></script>
 
   <div class="side-bar">
@@ -49,11 +49,15 @@ layout: table_wrappers
         <svg viewBox="0 0 24 24" class="icon"><use xlink:href="#svg-menu"></use></svg>
       </a>
     </div>
-    
+
     {% include toggle.html %}
 
     <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
-      {% include nav/main.html page=page %}
+      {% if site.nav_cache_main == true %}
+        {% include_cached nav/main.html page=page %}
+      {% else %}
+        {% include nav/main.html page=page %}
+      {% endif %}
     </nav>
     <footer class="site-footer">
       This site uses <a href="https://github.com/pmarsceill/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
@@ -91,7 +95,7 @@ layout: table_wrappers
     </div>
     <div id="main-content-wrap" class="main-content-wrap">
 
-      {% include nav/crumbs.html 
+      {% include nav/crumbs.html
             nodes=nav_page_ancestors
             prev_page=nav_page_prev
             next_page=nav_page_next
